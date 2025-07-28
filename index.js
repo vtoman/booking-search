@@ -24,8 +24,6 @@ const launcher = new BookingLauncher({
   newBrowserInstancesForLocations: appConfig.newBrowserInstancesForLocations,
 });
 
-//launcher.launch();
-
 (async () => {
   for (const destination of favoriteDestinations) {
     await launcher.updateConfig({ destination }).launch();
@@ -36,6 +34,3 @@ const launcher = new BookingLauncher({
     }
   }
 })();
-
-// Example: change destination and stayLengths, then launch again
-// launcher.updateConfig({ destination: "Sarti, Macedonia, Greece", stayLengths: [2, 5], checkin: "2025-08-10" }).launch();

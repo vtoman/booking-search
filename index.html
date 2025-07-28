@@ -1,0 +1,58 @@
+<!DOCTYPE html>
+<html>
+  <head>
+    <meta charset="UTF-8" />
+    <title>Booking Search Launcher</title>
+    <style>
+      body {
+        font-family: sans-serif;
+        margin: 0;
+        display: flex;
+        flex-direction: column;
+        align-items: center;
+        justify-content: center;
+        height: 100vh;
+      }
+
+      select,
+      button {
+        width: 80%;
+        padding: 6px;
+        margin: 6px;
+        font-size: 14px;
+      }
+    </style>
+  </head>
+  <body>
+    <label style="width: 80%">Destinations:</label>
+    <select id="locationSelect" multiple size="6"></select>
+
+    <label style="width: 80%">Stay length in nights:</label>
+    <select id="daysSelect" multiple size="7"></select>
+
+    <label style="width: 80%"
+      >Check-in date:
+      <input
+        id="checkinInput"
+        type="date"
+        style="width: 100%; padding: 6px; box-sizing: border-box"
+      />
+    </label>
+
+    <label style="width: 80%"
+      >Delay between queries (ms):
+      <input
+        id="delayInput"
+        type="number"
+        min="0"
+        step="500"
+        value="10000"
+        style="width: 100%; padding: 6px; box-sizing: border-box"
+      />
+    </label>
+
+    <button id="launchButton">Launch</button>
+
+    <script src="renderer.js"></script>
+  </body>
+</html>
