@@ -2,8 +2,63 @@
 <html>
   <head>
     <meta charset="UTF-8" />
+    <script>
+      // Apply saved theme as early as possible to avoid flash
+      (function () {
+        try {
+          var themes = [
+            "theme-light",
+            "theme-dark",
+            "theme-darker",
+            "theme-blue",
+            "theme-green",
+            "theme-yellow",
+          ];
+          var saved = localStorage.getItem("selectedTheme");
+          if (!saved || themes.indexOf(saved) === -1) saved = "theme-light";
+          document.documentElement.className = saved;
+        } catch (e) {
+          /* localStorage may be unavailable */
+        }
+      })();
+    </script>
     <title>Booking Search Launcher</title>
     <style>
+      :root {
+        --bg-color: #ffffff;
+        --fg-color: #000000;
+      }
+
+      .theme-light {
+        --bg-color: #ffffff;
+        --fg-color: #000000;
+      }
+
+      .theme-dark {
+        --bg-color: #202124;
+        --fg-color: #e8eaed;
+      }
+
+      .theme-darker {
+        --bg-color: #000000;
+        --fg-color: #ffffff;
+      }
+
+      .theme-blue {
+        --bg-color: #0d1b2a;
+        --fg-color: #e0e1dd;
+      }
+
+      .theme-green {
+        --bg-color: #1b5e20;
+        --fg-color: #c8e6c9;
+      }
+
+      .theme-yellow {
+        --bg-color: #fffde7;
+        --fg-color: #212121;
+      }
+
       body {
         font-family: sans-serif;
         margin: 0;
@@ -12,6 +67,8 @@
         align-items: center;
         justify-content: center;
         height: 100vh;
+        background: var(--bg-color);
+        color: var(--fg-color);
       }
 
       select,
@@ -20,11 +77,56 @@
         padding: 6px;
         margin: 6px;
         font-size: 14px;
+        background: var(--bg-color);
+        color: var(--fg-color);
+        border: 1px solid var(--fg-color);
+      }
+
+      input {
+        width: 100%;
+        padding: 6px;
+        margin: 6px 0px;
+        box-sizing: border-box;
+        font-size: 14px;
+        background: var(--bg-color);
+        color: var(--fg-color);
+        border: 1px solid var(--fg-color);
+      }
+
+      #themeBtn {
+        position: absolute;
+        top: 0px;
+        right: 0px;
+        width: auto;
+        background: transparent;
+        border: none;
+        color: var(--fg-color);
+        font-size: 24px;
+        cursor: pointer;
       }
     </style>
   </head>
   <body>
-    <label style="width: 80%">Destinations:</label>
+    <div
+      style="
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: center;
+      "
+    >
+      <button id="themeBtn" title="Change theme">☯</button>
+    </div>
+    <div
+      style="
+        width: 80%;
+        display: flex;
+        justify-content: space-between;
+        align-items: right;
+      "
+    >
+      <label>Destinations:</label>
+    </div>
     <select id="locationSelect" multiple size="6"></select>
 
     <label style="width: 80%">Stay length in nights:</label>
@@ -32,26 +134,15 @@
 
     <label style="width: 80%"
       >Check-in date:
-      <input
-        id="checkinInput"
-        type="date"
-        style="width: 100%; padding: 6px; box-sizing: border-box"
-      />
+      <input id="checkinInput" type="date" />
     </label>
 
     <label style="width: 80%"
       >Delay between queries (ms):
-      <input
-        id="delayInput"
-        type="number"
-        min="0"
-        step="500"
-        value="10000"
-        style="width: 100%; padding: 6px; box-sizing: border-box"
-      />
+      <input id="delayInput" type="number" min="0" step="500" value="10000" />
     </label>
 
-    <button id="launchButton">Launch</button>
+    <button id="launchButton" style="margin-top: 20px">Launch</button>
 
     <script src="renderer.js"></script>
   </body>

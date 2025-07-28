@@ -18,6 +18,29 @@ const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
 checkinInput.value = tomorrow;
 const delayInput = document.getElementById("delayInput");
 const launchButton = document.getElementById("launchButton");
+const themeBtn = document.getElementById("themeBtn");
+
+// Theme toggle logic
+const themeClasses = [
+  "theme-light",
+  "theme-dark",
+  "theme-darker",
+  "theme-blue",
+  "theme-green",
+  "theme-yellow",
+];
+
+// Load saved theme or default to first
+let savedTheme = localStorage.getItem("selectedTheme");
+let themeIndex = savedTheme ? themeClasses.indexOf(savedTheme) : 0;
+if (themeIndex === -1) themeIndex = 0; // fallback if unknown
+
+themeBtn.addEventListener("click", () => {
+  themeIndex = (themeIndex + 1) % themeClasses.length;
+  const current = themeClasses[themeIndex];
+  document.body.className = current;
+  localStorage.setItem("selectedTheme", current);
+});
 
 // Populate location dropdown
 locations.forEach((loc, idx) => {
