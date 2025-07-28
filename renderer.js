@@ -11,11 +11,22 @@ const defaultFilters = [
 const locationSelect = document.getElementById("locationSelect");
 const daysSelect = document.getElementById("daysSelect");
 const checkinInput = document.getElementById("checkinInput");
-// Default check-in date = tomorrow
-const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
-  .toISOString()
-  .slice(0, 10);
-checkinInput.value = tomorrow;
+
+// Load saved check-in date or default to tomorrow
+const savedDate = localStorage.getItem("checkinDate");
+if (savedDate) {
+  checkinInput.value = savedDate;
+} else {
+  const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
+    .toISOString()
+    .slice(0, 10);
+  checkinInput.value = tomorrow;
+}
+
+// Persist date on change
+checkinInput.addEventListener("change", () => {
+  localStorage.setItem("checkinDate", checkinInput.value);
+});
 const delayInput = document.getElementById("delayInput");
 const launchButton = document.getElementById("launchButton");
 const themeBtn = document.getElementById("themeBtn");
@@ -51,8 +62,8 @@ locations.forEach((loc, idx) => {
   locationSelect.appendChild(option);
 });
 
-// Populate days dropdown (1-7)
-for (let i = 1; i <= 7; i++) {
+// Populate days dropdown
+for (let i = 1; i <= 6; i++) {
   const option = document.createElement("option");
   option.value = i;
   option.textContent = i.toString();
@@ -75,6 +86,8 @@ launchButton.addEventListener("click", async () => {
   }
 
   const checkin = checkinInput.value || new Date().toISOString().slice(0, 10);
+  // Save chosen date for next session
+  localStorage.setItem("checkinDate", checkin);
   const delayMs =
     parseInt(delayInput.value, 10) || config.delayBetweenLaunchesMs;
 

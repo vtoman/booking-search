@@ -16,7 +16,10 @@
           ];
           var saved = localStorage.getItem("selectedTheme");
           if (!saved || themes.indexOf(saved) === -1) saved = "theme-light";
-          document.documentElement.className = saved;
+          // Wait for body to exist, then apply theme
+          document.addEventListener("DOMContentLoaded", function () {
+            document.body.className = saved;
+          });
         } catch (e) {
           /* localStorage may be unavailable */
         }
@@ -88,6 +91,7 @@
         margin: 6px 0px;
         box-sizing: border-box;
         font-size: 14px;
+        font-weight: bold;
         background: var(--bg-color);
         color: var(--fg-color);
         border: 1px solid var(--fg-color);
@@ -130,7 +134,7 @@
     <select id="locationSelect" multiple size="8"></select>
 
     <label style="width: 80%">Stay length in nights:</label>
-    <select id="daysSelect" multiple size="7"></select>
+    <select id="daysSelect" multiple size="6"></select>
 
     <label style="width: 80%"
       >Check-in date:
@@ -138,7 +142,7 @@
     </label>
 
     <label style="width: 80%"
-      >Delay between queries (ms):
+      >Delay after one page creation (ms):
       <input id="delayInput" type="number" min="0" step="500" value="10000" />
     </label>
 

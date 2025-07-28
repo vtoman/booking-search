@@ -6,7 +6,8 @@
   "scripts": {
     "test": "echo \"Error: no test specified\" && exit 1",
     "start": "node index.js",
-    "electron": "electron ."
+    "electron": "electron .",
+    "pack": "electron-packager . BookingSearch --platform=win32 --arch=x64 --asar --out=dist --icon=icon.ico --prune=true --overwrite"
   },
   "keywords": [],
   "author": "",
@@ -14,6 +15,7 @@
   "type": "commonjs",
   "dependencies": {},
   "devDependencies": {
-    "electron": "^27.1.0"
+    "electron": "^27.1.0",
+    "electron-packager": "^17.1.1"
   }
 }

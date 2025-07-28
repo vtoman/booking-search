@@ -4,11 +4,18 @@ const path = require("path");
 function createWindow() {
   const win = new BrowserWindow({
     width: 400,
-    height: 580,
+    height: 600,
+    icon: path.join(__dirname, "icon.ico"),
+    show: false,
+    backgroundColor: "#ffffff",
     webPreferences: {
       nodeIntegration: true,
       contextIsolation: false,
     },
+  });
+
+  win.once("ready-to-show", () => {
+    win.show();
   });
 
   win.setMenuBarVisibility(false);
