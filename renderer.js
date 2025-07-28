@@ -1,18 +1,30 @@
 const BookingLauncher = require("./BookingLauncher");
 const locations = require("./locations");
 const config = require("./config");
+// Default filters used in index.js example
+const defaultFilters = [
+  "oos=1", // only show available
+  "roomfacility=38", // private bathroom
+  "roomfacility=11", // air conditioning
+];
 
 const locationSelect = document.getElementById("locationSelect");
 const daysSelect = document.getElementById("daysSelect");
 const checkinInput = document.getElementById("checkinInput");
+// Default check-in date = tomorrow
+const tomorrow = new Date(Date.now() + 24 * 60 * 60 * 1000)
+  .toISOString()
+  .slice(0, 10);
+checkinInput.value = tomorrow;
 const delayInput = document.getElementById("delayInput");
 const launchButton = document.getElementById("launchButton");
 
 // Populate location dropdown
-locations.forEach((loc) => {
+locations.forEach((loc, idx) => {
   const option = document.createElement("option");
   option.value = loc;
   option.textContent = loc;
+  if (idx === 0) option.selected = true;
   locationSelect.appendChild(option);
 });
 
@@ -21,6 +33,7 @@ for (let i = 1; i <= 7; i++) {
   const option = document.createElement("option");
   option.value = i;
   option.textContent = i.toString();
+  if (i === 1) option.selected = true;
   daysSelect.appendChild(option);
 }
 
@@ -51,6 +64,7 @@ launchButton.addEventListener("click", async () => {
       adults: 1,
       rooms: 1,
       delayMs,
+      filters: defaultFilters,
       newBrowserInstancesForLocations: config.newBrowserInstancesForLocations,
     });
 
